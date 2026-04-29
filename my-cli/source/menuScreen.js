@@ -5,7 +5,7 @@ import {menu} from '../assets/menu.js'
 export default function MenuScreen({onSelect}){
 
     useInput((input, key) => {
-        if (input === "1") onSelect("SCREEN_NAME_1");
+        if (input === "1") onSelect("SINGLE_FVE");
         if (input === "2") onSelect("SCREEN_NAME_2");
         if (input.toLowerCase() === "q") onSelect("LOGOUT");
     });
@@ -18,14 +18,14 @@ export default function MenuScreen({onSelect}){
 			alignItems="center"
 			width={60}
         >
-            <Text>{menu}</Text>
+            <Box><Text>{menu}</Text></Box>
             <Box
                 flexDirection='column'
                 marginTop={1}
             >
                 <Text>1) Single Run FVE</Text>
                 <Text>2) Batch Run FVE</Text>
-                <Text color="red">Q to Quit</Text>
+                <Text color="red" dimColor>Q to Quit</Text>
             </Box>
         </Box>
     );

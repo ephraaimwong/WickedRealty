@@ -1,10 +1,11 @@
 import React from 'react';
-import {Box, Text, useInput} from 'ink';
-import { singleFVE } from '../assets/singleFVE';
+import {Box, Newline, Text, useInput} from 'ink';
+import { singleFVE } from '../assets/singleFVE.js';
 
-const SingleFVEScreen = ({onDone}) => {
+const SingleFVEScreen = ({onSelect}) => {
     useInput((input,key) =>{
-        if (key.return) onDone();
+        if (key.return) onSelect("STATUS");
+        if (key.escape) onSelect("MENU");
     });
 	return (
 		<Box
@@ -21,10 +22,15 @@ const SingleFVEScreen = ({onDone}) => {
                 flexDirection='column'
             >
                 <Text>
-                    Steps
+                    Steps 
+                    <Newline/>
                     1) Place Property Data in `~\...\folderpath`
+                    <Newline/>
                     2) Check that masterdata.csv is in `~\...\folderpath`
+                    <Newline/>
                     Press Enter to Continue
+                    <Newline/>
+                    Press ESC to go back to menu.
                 </Text>
             </Box>
 		</Box>

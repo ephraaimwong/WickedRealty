@@ -4,6 +4,8 @@ import LogoScreen from './logoScreen.js';
 import LoginScreen from './loginScreen.js';
 import MenuScreen from './menuScreen.js';
 import LogoutScreen from './logoutScreen.js';
+import ReportStatusScreen from './reportStatusScreen.js';
+import SingleFVEScreen from './singleFVEScreen.js';
 
 export default function App() {
 	const [route, setRoute] = useState("LOGO");
@@ -11,8 +13,9 @@ export default function App() {
 	const screens = {
 		LOGO: <LogoScreen onDone={() => setRoute("LOGIN")}/>,
 		LOGIN:<LoginScreen onSuccess={() => setRoute("MENU")}/>,
-		MENU: <MenuScreen onSelect={(target)=> setRoute(target)}/>,
-		// SINGLE_FVE:,
+		MENU: <MenuScreen onSelect={(target) => setRoute(target)}/>,
+		SINGLE_FVE:<SingleFVEScreen onSelect={(target) => setRoute(target)}/>,
+		STATUS: <ReportStatusScreen onBack={() => setRoute("MENU")}/>,
 		LOGOUT: <LogoutScreen onDone={process.exit}/>
 	};
 	return(

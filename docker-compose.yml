@@ -9,9 +9,15 @@ services:
       - NODE_ENV=production
       - TERM=xterm-256color
     volumes:
-      - ./FVE_OUTPUT:/app/FVE_OUTPUT
-      - ./DATASET:/app/DATASET
-      - ./INPUT_FILES_HERE:/app/INPUT_FILES_HERE
+      # Data Folders (Mapped to the path your calcEngine.js expects using host $USER)
+      - ./FVE_OUTPUT:/root/${USER}/WickedRealty/FVE_OUTPUT
+      - ./DATASET:/root/${USER}/WickedRealty/DATASET
+      - ./INPUT_FILES_HERE:/root/${USER}/WickedRealty/INPUT_FILES_HERE
+      
+      # Persistence for your tmp folder
+      - ./tmp:/app/tmp
+
+      # Config files (Mapped to app root so the Climber finds them first)
       - ./config.json:/app/config.json
       - ./adjustments.json:/app/adjustments.json
     ports:

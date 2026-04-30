@@ -1,0 +1,31 @@
+services:
+  fve-engine:
+    build: .
+    container_name: wicked-realty-web-cli
+    # -W: writable (required for user input)
+    # -p 7681: port to listen on
+    command: ["-W", "-p", "7681", "node", "dist/cli.js"]
+    environment:
+      - NODE_ENV=production
+      - TERM=xterm-256color
+    volumes:
+      # Data Folders (Mapped to the path your calcEngine.js expects using host $USER)
+      - ./FVE_OUTPUT:/root/${USER}/WickedRealty/FVE_OUTPUT
+      - ./DATASET:/root/${USER}/WickedRealty/DATASET
+      - ./INPUT_FILES_HERE:/root/${USER}/WickedRealty/INPUT_FILES_HERE
+      
+      # Persistence for your tmp folder
+      - ./tmp:/app/tmp
+
+      # Config files (Mapped to app root so the Climber finds them first)
+      - ./config.json:/app/config.json
+      - ./adjustments.json:/app/adjustments.json
+    ports:
+      - "7681:7681"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:7681 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s

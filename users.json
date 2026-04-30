@@ -1,0 +1,18 @@
+{
+    "realtor": {
+        "password": "123",
+        "role": "RE"
+    },
+    "manager": {
+        "password": "123",
+        "role": "MN"
+    },
+    "it": {
+        "password": "123",
+        "role": "IT"
+    },
+    "analyst": {
+        "password": "123",
+        "role": "BA"
+    }
+}

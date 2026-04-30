@@ -1,8 +1,8 @@
 import React from 'react';
 import {Box, Newline, Text, useInput} from 'ink';
-import { singleFVE } from '../../assets/singleFVE.js';
+import { batchFVE } from '../../assets/batchFVE.js' 
 
-const SingleFVEScreen = ({onSelect}) => {
+const BatchFVEScreen = ({onSelect}) => {
     useInput((input,key) =>{
         if (key.escape) onSelect("MENU");
         if (key.return) onSelect("STATUS");
@@ -16,7 +16,7 @@ const SingleFVEScreen = ({onSelect}) => {
 			width={60}
 		>
 			<Text>
-                {singleFVE}
+                {batchFVE}
             </Text>
             <Box
                 flexDirection='column'
@@ -37,4 +37,4 @@ const SingleFVEScreen = ({onSelect}) => {
 	);
 };
 
-export default SingleFVEScreen;
+export default BatchFVEScreen;

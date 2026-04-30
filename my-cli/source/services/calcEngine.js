@@ -52,7 +52,8 @@ export async function runFVECalculation() {
     }
 
     // 4. Path Construction
-    const BASE_DIR = path.join(homedir(), CONFIG.user, CONFIG.baseFolder);
+    const targetUser = process.env.HOST_USER || CONFIG.user;
+    const BASE_DIR = path.join(homedir(), targetUser, CONFIG.baseFolder);
     const PATHS = {
         input: path.join(BASE_DIR, CONFIG.inputFolder),
         dataset: path.join(BASE_DIR, CONFIG.datasetFolder),

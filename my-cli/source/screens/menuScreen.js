@@ -4,15 +4,16 @@ import { menu } from '../../assets/menu.js';
 import { logError } from '../services/logger.js';
 
 export default function MenuScreen({ user, onSelect, onLogout }) {
-    // Determine visibility based on permission strings
-    const canCalculate = user?.permissions?.includes('fve_calculate');
-    const canAudit = user?.permissions?.includes('valuation_audit');
-    const canTune = user?.permissions?.includes('market_tune');
-    const canAdmin = user?.permissions?.includes('user_mgmt');
-    const canMonitor = user?.permissions?.includes('infra_monitor');
+    // Permission Mapping
+    const canCalculate = user?.permissions?.includes('fve_calculate'); // Options 1, 2
+    const canAudit = user?.permissions?.includes('valuation_audit');   // Option 3
+    const canTune = user?.permissions?.includes('market_tune');       // Option 4
+    const canMonitor = user?.permissions?.includes('infra_monitor');   // Option 5
+    const canAdmin = user?.permissions?.includes('user_mgmt');         // Options 6, 7
 
-    useInput((input, key) => {
-        
+    useInput((input) => {
+        const cmd = input.toLowerCase();
+
         //chaos smoke test
         if (input === 'x') {
             try {
@@ -23,68 +24,49 @@ export default function MenuScreen({ user, onSelect, onLogout }) {
             }
         }
 
-        const cmd = input.toLowerCase();
-
-        // Universal commands
+        // Universal Commands
         if (cmd === "q") onLogout();
         if (cmd === "v") onSelect("APP_VERSION");
 
-        // Gated commands
+        // Gated Commands: Must match the visual number
         if (canCalculate) {
             if (cmd === "1") onSelect("SINGLE_FVE");
             if (cmd === "2") onSelect("BATCH_FVE");
-            if (cmd === "3") onSelect("STATUS");
         }
-
-        if (canAudit && cmd === "4") onSelect("CMA");
-        if (canTune && cmd === "5") onSelect("CLIENT_ADJUST");
-
-        if (canMonitor && cmd === "6") onSelect("ERRORLOG");
-
+        if (canAudit && cmd === "3") onSelect("CMA");
+        // if (canTune && cmd === "4") onSelect("CLIENT_ADJUST");
+        if (canMonitor && cmd === "5") onSelect("ERRORLOG");
         if (canAdmin) {
-            if (cmd === "7") onSelect("ADD_USER");
-            if (cmd === "8") onSelect("REMOVE_USER");
+            if (cmd === "6") onSelect("ADD_USER");
+            if (cmd === "7") onSelect("REMOVE_USER");
         }
     });
 
     return (
-        <Box
-            borderStyle="single"
-            padding={1}
-            flexDirection="column"
-            alignItems="center"
-            width={60}
-        >
+        <Box borderStyle="single" padding={1} flexDirection="column" alignItems="center" width={60}>
             <Box><Text>{menu}</Text></Box>
             <Box flexDirection="column" marginTop={1} width="100%">
-                <Text bold color="cyan">Welcome, {user.roleName} ({user.id})</Text>
+                <Text bold color="cyan">User: {user.id} | Role: {user.roleName}</Text>
                 
-                {/* Core FVE Section */}
+                {/* 1-4: Agent & Analyst Tools */}
                 {canCalculate && (
-                    <Box flexDirection="column" marginTop={1}>
+                    <>
                         <Text>1) Single Run FVE</Text>
                         <Text>2) Batch Run FVE</Text>
-                        <Text>3) View Process Status</Text>
-                    </Box>
+                    </>
                 )}
+                {canAudit && <Text>3) Comparative Market Analysis (CMA)</Text>}
+                {/* {canTune && <Text>4) Edit Client Adjustments</Text>} */}
 
-                {/* Audit & Strategy Section */}
-                {(canAudit || canTune) && (
-                    <Box flexDirection="column" marginTop={1}>
-                        {canAudit && <Text>4) Comparative Market Analysis (CMA)</Text>}
-                        {canTune && <Text>5) Edit Client Adjustments</Text>}
-                    </Box>
-                )}
-
-                {/* IT Infrastructure Section */}
+                {/* 5-7: Admin & Infrastructure */}
                 {(canMonitor || canAdmin) && (
                     <Box flexDirection="column" marginTop={1} borderStyle="round" borderColor="yellow" paddingLeft={1}>
-                        <Text color="yellow" bold>[SYSTEM ADMINISTRATION]</Text>
-                        {canMonitor && <Text>6) View Infrastructure Error Logs</Text>}
+                        <Text color="yellow" bold>[ADMINISTRATION]</Text>
+                        {canMonitor && <Text>5) View Infrastructure Logs</Text>}
                         {canAdmin && (
                             <>
-                                <Text>7) Create New User Account</Text>
-                                <Text>8) Remove Existing Account</Text>
+                                <Text>6) Create New User</Text>
+                                <Text>7) Remove Existing User</Text>
                             </>
                         )}
                     </Box>

@@ -7,24 +7,24 @@
     },
     "permissions": {
         "RE": [
+            "fve_calculate", 
+            "valuation_audit", 
+            "market_tune"
+        ], 
+        "BA": [
             "fve_calculate",
-            "listings_read"
+            "valuation_audit"
         ],
         "MN": [
             "fve_calculate",
             "valuation_audit",
-            "market_tune"
+            "market_tune",
+            "infra_monitor",
+            "user_mgmt"
         ],
         "IT": [
-            "user_mgmt",
             "infra_monitor",
-            "db_generate",
-            "config_edit"
-        ],
-        "BA": [
-            "market_tune",
-            "valuation_audit",
-            "data_export"
-        ]       
+            "user_mgmt"
+        ]  
     }
 }

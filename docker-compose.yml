@@ -17,10 +17,13 @@ services:
       
       # Persistence for your tmp folder
       - ./tmp:/app/tmp
-
-      # Config files (Mapped to app root so the Climber finds them first)
+      
+      # Project Root Folders / Files
+      - ./ERROR_LOGS:/app/ERROR_LOGS
       - ./config.json:/app/config.json
       - ./adjustments.json:/app/adjustments.json
+      - ./users.json:/app/users.json
+      - ./roles.json:/app/roles.json
     ports:
       - "7681:7681"
     restart: unless-stopped

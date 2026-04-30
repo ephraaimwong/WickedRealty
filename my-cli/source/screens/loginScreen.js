@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {Box, Text, useInput} from 'ink';
 import TextInput from 'ink-text-input';
-import {login} from '../assets/login.js';
+import {login} from '../../assets/login.js';
 
 const LoginScreen = ({onSuccess}) => {
     const [username, setUsername] = useState('');

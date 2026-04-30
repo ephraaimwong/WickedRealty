@@ -1,6 +1,6 @@
 import { Box, Text, useInput } from 'ink';
 import React from 'react';
-import {menu} from '../assets/menu.js'
+import {menu} from '../../assets/menu.js'
 
 export default function MenuScreen({onSelect}){
 

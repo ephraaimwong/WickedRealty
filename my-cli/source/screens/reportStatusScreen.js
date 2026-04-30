@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Box, Text, useInput} from 'ink';
-import {Status} from '../assets/status.js';
+import {Status} from '../../assets/status.js';
 import Spinner from 'ink-spinner';
+import { runFVECalculation } from '../services/calcEngine.js';
 
 const ReportStatusScreen = ({onBack}) => {
 	const [status, setStatus] = useState('loading');
@@ -10,28 +11,43 @@ const ReportStatusScreen = ({onBack}) => {
 		if (status !== 'loading' && key.return) onBack(); //do not accept keys while loading
 	});
 
-	//helper simulation method
+	// //helper simulation method
+	// useEffect(() => {
+	// 	// 1. Simulate the delay of processing a file
+	// 	const timer = setTimeout(() => {
+	// 		// 2. STUB: Randomly choose an outcome for testing
+	// 		const outcomes = ['success', 'warning', 'failure'];
+	// 		const result = outcomes[Math.floor(Math.random() * outcomes.length)];
+
+	// 		if (result === 'success') {
+	// 			setStatus('success');
+	// 			setMessage('resultCMA.csv generated successfully.');
+	// 		} else if (result === 'warning') {
+	// 			setStatus('warning');
+	// 			setMessage('CMA generated, but 4 properties were missing Area Data.');
+	// 		} else {
+	// 			setStatus('failure');
+	// 			setMessage('Error: masterareadata.csv not found in /data folder.');
+	// 		}
+	// 	}, 3500); // 3.5 seconds of "loading"
+
+	// 	return () => clearTimeout(timer);
+	// }, []);
+
 	useEffect(() => {
-		// 1. Simulate the delay of processing a file
-		const timer = setTimeout(() => {
-			// 2. STUB: Randomly choose an outcome for testing
-			const outcomes = ['success', 'warning', 'failure'];
-			const result = outcomes[Math.floor(Math.random() * outcomes.length)];
-
-			if (result === 'success') {
-				setStatus('success');
-				setMessage('resultCMA.csv generated successfully.');
-			} else if (result === 'warning') {
-				setStatus('warning');
-				setMessage('CMA generated, but 4 properties were missing Area Data.');
-			} else {
-				setStatus('failure');
-				setMessage('Error: masterareadata.csv not found in /data folder.');
+		async function executeFVE(){
+			try {
+				console.log("DEBUG STATEMENT");
+				const res = await runFVECalculation();
+				setStatus(res.status);
+				setMessage(res.message);
+			} catch (error) {
+				setStatus("failure");
+				setMessage(error.message);
 			}
-		}, 3500); // 3.5 seconds of "loading"
-
-		return () => clearTimeout(timer);
-	}, []);
+		}
+		executeFVE();
+	},[])
 
 	return (
 		<Box
@@ -61,11 +77,10 @@ const ReportStatusScreen = ({onBack}) => {
 					<Box flexDirection="column" alignItems="center">
 						<Text
 							color={
-								status === 'success'
-									? 'green'
-									: status === 'warning'
-									? 'yellow'
-									: 'red'
+								status === 'success' ? 'green': 
+								status === 'warning' ? 'yellow':
+								status === 'failure' ? 'red':
+								""
 							}
 							bold
 						>

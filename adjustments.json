@@ -1,0 +1,10 @@
+{
+  "poolValue": 15000,
+  "garageSpaceValue": 7500,
+  "fullBathValue": 7000,
+  "halfBathValue": 2500,
+  "sqftTolerance": 0.20,
+  "yearBuiltPremium": 1000,
+  "deckValue": 6000,
+  "patioValue": 4500
+}

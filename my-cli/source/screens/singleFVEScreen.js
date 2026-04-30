@@ -1,11 +1,11 @@
 import React from 'react';
 import {Box, Newline, Text, useInput} from 'ink';
-import { singleFVE } from '../assets/singleFVE.js';
+import { singleFVE } from '../../assets/singleFVE.js';
 
 const SingleFVEScreen = ({onSelect}) => {
     useInput((input,key) =>{
-        if (key.return) onSelect("STATUS");
         if (key.escape) onSelect("MENU");
+        if (key.return) onSelect("STATUS");
     });
 	return (
 		<Box

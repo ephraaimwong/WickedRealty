@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Text, useInput} from 'ink';
-import {logo} from '../assets/logo.js';
+import {logo} from '../../assets/logo.js';
 
 const LogoScreen = ({onDone}) => {
     useInput((input,key) =>{

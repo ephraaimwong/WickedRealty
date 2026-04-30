@@ -18,9 +18,10 @@
 	"dependencies": {
 		"csv-parse": "^6.2.1",
 		"csv-stringify": "^6.7.0",
-		"ink": "^4.1.0",
+		"ink": "^5.2.1",
+		"ink-select-input": "^6.2.0",
 		"ink-spinner": "^5.0.0",
-		"ink-text-input": "^5.0.1",
+		"ink-text-input": "^6.0.0",
 		"meow": "^11.0.0",
 		"react": "^18.2.0"
 	},

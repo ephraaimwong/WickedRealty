@@ -1,0 +1,30 @@
+{
+    "roles": {
+        "RE": "Realtor Agent",
+        "MN": "Operations Manager",
+        "IT": "IT Admin",
+        "BA": "Business Analyst"
+    },
+    "permissions": {
+        "RE": [
+            "fve_calculate",
+            "listings_read"
+        ],
+        "MN": [
+            "fve_calculate",
+            "valuation_audit",
+            "market_tune"
+        ],
+        "IT": [
+            "user_mgmt",
+            "infra_monitor",
+            "db_generate",
+            "config_edit"
+        ],
+        "BA": [
+            "market_tune",
+            "valuation_audit",
+            "data_export"
+        ]       
+    }
+}

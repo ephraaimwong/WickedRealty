@@ -1,8 +1,8 @@
 import React from 'react';
 import {Box, Newline, Text, useInput} from 'ink';
-import { singleFVE } from '../../assets/singleFVE.js';
+import { clientadjustment } from '../../assets/clientadjustment.js';
 
-const SingleFVEScreen = ({onSelect}) => {
+const clientAdjustmentScreen = ({onSelect}) => {
     useInput((input,key) =>{
         if (key.escape) onSelect("MENU");
         if (key.return) onSelect("STATUS");
@@ -16,7 +16,7 @@ const SingleFVEScreen = ({onSelect}) => {
 			width={60}
 		>
 			<Text>
-                {singleFVE}
+                {clientadjustment}
             </Text>
             <Box
                 flexDirection='column'
@@ -24,9 +24,9 @@ const SingleFVEScreen = ({onSelect}) => {
                 <Text>
                     Steps 
                     <Newline/>
-                    1) Place Property Data in `~/WickedRealty/INPUT_FILES_HERE/.`
+                    1) Place Property Data in `~\...\folderpath`
                     <Newline/>
-                    2) Check that masterdata.csv is in `~/WickedRealty/DATASET/.`
+                    2) Check that masterdata.csv is in `~\...\folderpath`
                     <Newline/>
                     Press Enter to Continue
                     <Newline/>
@@ -37,4 +37,4 @@ const SingleFVEScreen = ({onSelect}) => {
 	);
 };
 
-export default SingleFVEScreen;
+export default clientAdjustmentScreen;

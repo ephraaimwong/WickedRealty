@@ -1,0 +1,25 @@
+services:
+  fve-engine:
+    build: .
+    container_name: wicked-realty-web-cli
+    # -W: writable (required for user input)
+    # -p 7681: port to listen on
+    command: ["-W", "-p", "7681", "node", "dist/cli.js"]
+    environment:
+      - NODE_ENV=production
+      - TERM=xterm-256color
+    volumes:
+      - ./FVE_OUTPUT:/app/FVE_OUTPUT
+      - ./DATASET:/app/DATASET
+      - ./INPUT_FILES_HERE:/app/INPUT_FILES_HERE
+      - ./config.json:/app/config.json
+      - ./adjustments.json:/app/adjustments.json
+    ports:
+      - "7681:7681"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:7681 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s

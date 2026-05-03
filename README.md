@@ -12,7 +12,8 @@ Use ink js for TUI application development (https://github.com/vadimdemedes/ink)
 
 ## Run Docker
 1. `docker compose up -d --build`
-    * App will be on port 7681
+    * App will be on port localhost 7681
+    * App built for tailnet compatibility, tested alongside Portainer. 
 2. `docker compose down` to tear down
 
 ## Key Files/Folders

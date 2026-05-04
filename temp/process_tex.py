@@ -15,41 +15,42 @@ preamble = re.sub(r'\\hypersetup\{([^{}]|\{[^{}]*\})*\}', '', preamble)
 preamble = re.sub(r'\\author\{([^{}]|\{[^{}]*\})*\}', '', preamble)
 preamble = re.sub(r'\\date\{([^{}]|\{[^{}]*\})*\}', '', preamble)
 
+# Update Revision History Date: May/01/2026 -> May/03/2026
+body = body.replace('May/01/2026', 'May/03/2026')
+
+# Robustly fix the broken "Tested" word
+# Matches "Hardware Interface: T" followed by whitespace/newlines and "ested"
+body = re.sub(r'Hardware Interface:\s*T\s*\n\s*\n\s*ested', 'Hardware Interface: Tested', body)
+
+# Fix line break for "stress tested"
+body = body.replace('stress tested', r'\mbox{stress tested}')
+
 # Identify and remove original title block (from start to Revision History)
 title_match = re.search(r'[\s\S]*?Revision History', body)
 if title_match:
     body = "Revision History" + body[title_match.end():]
 
-# TOC logic: Remove from TOC start to JUST BEFORE the Overview section
+# TOC logic
 start_marker = r'\\hypertarget\{table-of-contents\}'
-# Match the start of the overview hypertarget
 overview_marker = r'\\hypertarget\{overview\}'
 
 if re.search(start_marker, body) and re.search(overview_marker, body):
-    # Replace from TOC start to just before the overview hypertarget
     body = re.sub(start_marker + r'[\s\S]*?(?=' + overview_marker + r')', r'\\tableofcontents\n\\newpage\n', body)
 
 # Global replacements in body
 body = body.replace('./conversion/', './')
 body = body.replace(r'}\\', r'}')
 
-# Fix navigation: Add \phantomsection before headers
-# We'll also clean up pandoc's nested hypertargets which can cause duplication/misalignment
-# Change \hypertarget{id}{\section{...}} to \phantomsection\section{...}\label{id}
+# Fix navigation and clean section markers
 def clean_sections(match):
     hid = match.group(1)
     content = match.group(2)
-    # Check if content already has a label
     if r'\label{' in content:
         return r'\phantomsection ' + content
     else:
         return r'\phantomsection ' + content + r'\label{' + hid + r'}'
 
-# Match \hypertarget{label}{\section/subsection...}
-# Pandoc format: \hypertarget{id}{% \section{...}\label{id}}
 body = re.sub(r'\\hypertarget\{([^{}]+)\}\{\s*%\s*(\\(?:sub)*section\{[^{}]+\}(?:\\label\{[^{}]+\})?)\}', clean_sections, body)
-
-# For any remaining sections not wrapped in hypertarget
 body = re.sub(r'(?<!\\phantomsection)(\\(?:sub)*section\{)', r'\\phantomsection\1', body)
 
 def generate_tex(name, theme_preamble, title_block):
@@ -157,4 +158,4 @@ light_preamble = r"""
 
 generate_tex('RD3.0_light', light_preamble, get_title_page('black', 'black'))
 generate_tex('RD3.0_dark', dark_preamble, get_title_page('titleorange', 'lighttext'))
-print("Fixed duplicate overview and cleaned section markers.")
+print("Fixed the broken 'Hardware Interface: Tested' using regex.")
